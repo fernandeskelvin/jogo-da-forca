@@ -2,16 +2,21 @@ import random
 import os
 from time import sleep
 
+# Função para limpar a tela
 def limpar_tela():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+# Função para exibir o painel, atualizando conforme entrada de letras pelo input
 def mostrar_painel():
     limpar_tela()
+    lugar_letra_correta = [letra.upper() for letra in lugar_para_encontrar]
     print(f'Você só pode errar {tentativas} vezes até acertar a palavra! \U0001f6a8\n')
-    print(" ".join(lugar_para_encontrar))
+    print(" ".join(lugar_letra_correta))
+    
     if len(lista_errada) != 0:
         print('\n\n\u274C Letras erradas: ' + ' - '.join(letra.upper() for letra in lista_errada))
 
+# Lista de palavras
 palavras = ['banana', 'laranja', 'maça', 'uva', 'morango',
 'abacaxi', 'limao', 'pera', 'kiwi', 'melancia', 'manga', 'goiaba',
 'ameixa', 'cereja']
@@ -19,6 +24,7 @@ palavras = ['banana', 'laranja', 'maça', 'uva', 'morango',
 nome_usuario = input('Olá, qual é o seu nome? ')
 print(f'\nOlá, {nome_usuario}! Seja Bem-vinda(o) ao Jogo da Forca! \U0001f609\n\n')
 
+# Loop principal do jogo
 while True:
     palavra_escolhida = random.choice(palavras)
     numero_letras = len(palavra_escolhida)
@@ -43,14 +49,14 @@ while True:
 
         elif letra_escolhida in palavra_escolhida:
             print('Woow! Essa letra existe na sua palavra!')
-            sleep(1)
+            sleep(2)
             lista_correta.append(letra_escolhida)
             indices = [i for i, letra in enumerate(palavra_escolhida) if letra == letra_escolhida]
             for indice in indices:
                 lugar_para_encontrar[indice] = letra_escolhida
         else:
             print('Você errou, essa letra não existe na palavra! \u274C')
-            sleep(1)
+            sleep(2)
             tentativas = tentativas - 1
             lista_errada.append(letra_escolhida)
 
