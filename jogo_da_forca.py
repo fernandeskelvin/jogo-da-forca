@@ -39,23 +39,32 @@ while True:
 
     while contador_erros < tentativas and lugar_para_encontrar != list(palavra_escolhida):
 
-        mostrar_painel()
-        letra_escolhida = input('\n\U0001f449 Escolha uma letra: ').lower()
+        while True:
+
+            mostrar_painel()
+
+            letra_escolhida = str(input('\n\U0001f449 Escolha uma letra: ').lower())
+            if len(letra_escolhida) == 1:
+                break
+            else:
+                print('\nEscolha apenas 1 letra por vez! \u26A0\uFE0F')
+                sleep(2)
+                limpar_tela()
 
         if letra_escolhida in lugar_para_encontrar or letra_escolhida in lista_errada:
-            print('Você já escolheu esta letra antes!')
+            print('\nVocê já escolheu esta letra antes! \u26A0\uFE0F')
             sleep(2)
             continue
 
         elif letra_escolhida in palavra_escolhida:
-            print('Woow! Essa letra existe na sua palavra!')
+            print('\nWoow! Essa letra existe na sua palavra!')
             sleep(2)
             lista_correta.append(letra_escolhida)
             indices = [i for i, letra in enumerate(palavra_escolhida) if letra == letra_escolhida]
             for indice in indices:
                 lugar_para_encontrar[indice] = letra_escolhida
         else:
-            print('Você errou, essa letra não existe na palavra! \u274C')
+            print('\nVocê errou, essa letra não existe na palavra! \u274C')
             sleep(2)
             tentativas = tentativas - 1
             lista_errada.append(letra_escolhida)
