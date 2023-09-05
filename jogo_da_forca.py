@@ -6,27 +6,53 @@ from time import sleep
 def limpar_tela():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+# Boneco ilustrativo
+def desenhar_boneco(tentativas):
+    boneco = [
+        "  _____",
+        " |     |",
+        " |     " + ("O" if tentativas < 6 else " "),
+        " |    " + ("/" if tentativas < 5 else " ") + ("|" if tentativas < 4 else " ") + ("\\" if tentativas < 3 else " "),
+        " |    " + ("/" if tentativas < 2 else " ") + (" \\" if tentativas < 1 else " "),
+        "_|_"
+    ]
+
+    for linha in boneco:
+        print(linha)
+
 # Função para exibir o painel, atualizando conforme entrada de letras pelo input
 def mostrar_painel():
     limpar_tela()
     lugar_letra_correta = [letra.upper() for letra in lugar_para_encontrar]
     print(f'Você só pode errar {tentativas} vezes até acertar a palavra! \U0001f6a8\n')
+    print(f'Dica: {categoria.upper()}\n')
     print(" ".join(lugar_letra_correta))
-    
+    desenhar_boneco(tentativas)
+
     if len(lista_errada) != 0:
         print('\n\n\u274C Letras erradas: ' + ' - '.join(letra.upper() for letra in lista_errada))
 
+# Sortear palavra
+def sortear_palavra_e_categoria():
+    categoria = random.choice(list(palavras.keys()))
+    palavra = random.choice(palavras[categoria])
+    return categoria, palavra
+
 # Lista de palavras
-palavras = ['banana', 'laranja', 'maça', 'uva', 'morango',
-'abacaxi', 'limao', 'pera', 'kiwi', 'melancia', 'manga', 'goiaba',
-'ameixa', 'cereja']
+palavras = {
+    "esporte": ["futebol", "basquete", "atletismo", "boxe", "golfe", "ciclismo"],
+    "fruta": ["banana", "abacaxi", "morango", "pera", "uva", "manga", "melancia", "kiwi"],
+    "animal": ["tigre", "elefante", "girafa", "zebra", "gato", "cachorro", "papagaio", "borboleta"],
+    "cidade": ["paris", "londres", "salvador", "campinas", "barcelona", "curitiba", "manaus"]
+}
 
 nome_usuario = input('Olá, qual é o seu nome? ')
+limpar_tela()
 print(f'\nOlá, {nome_usuario}! Seja Bem-vinda(o) ao Jogo da Forca! \U0001f609\n\n')
 
 # Loop principal do jogo
 while True:
-    palavra_escolhida = random.choice(palavras)
+    categoria, palavra_escolhida = sortear_palavra_e_categoria()
     numero_letras = len(palavra_escolhida)
     lugar_para_encontrar = ["_" for _ in range(numero_letras)]
     lista_correta = []
@@ -35,7 +61,8 @@ while True:
     contador_erros = 0
 
     print(f'Sua palavra tem {numero_letras} letras! \U0001f4a1\n')
-    siga = input('Pressione Enter para iniciar o jogo ...')
+    print('Dica:', categoria.upper())
+    siga = input('\nPressione Enter para iniciar o jogo ...')
 
     while contador_erros < tentativas and lugar_para_encontrar != list(palavra_escolhida):
 
@@ -57,7 +84,7 @@ while True:
             continue
 
         elif letra_escolhida in palavra_escolhida:
-            print('\nWoow! Essa letra existe na sua palavra!')
+            print('\nWoow! Essa letra existe na sua palavra! \U0001f64c')
             sleep(2)
             lista_correta.append(letra_escolhida)
             indices = [i for i, letra in enumerate(palavra_escolhida) if letra == letra_escolhida]
@@ -72,7 +99,9 @@ while True:
     limpar_tela()
 
     if contador_erros >= tentativas:
-        print(f'Você perdeu!\n\nA palavra correta era "{palavra_escolhida.upper()}".\n')
+        print(f'Você perdeu!\n')
+        desenhar_boneco(tentativas)
+        print(f'\nA palavra correta era "{palavra_escolhida.upper()}".\n')
     else:
         print(f'Parabéns! Você acertou a palavra! \U0001f389\n\nA palavra correta era {palavra_escolhida.upper()}!\n')
 
