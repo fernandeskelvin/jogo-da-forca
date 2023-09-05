@@ -1,8 +1,8 @@
 ## Jogo da Forca
 O jogo tem como objetivo adivinhar a palavra sorteada, tendo como dica o número de letras e uma categoria. 
 
-# Editor de código
+## Editor de código
 Visual Studio Code
 
-# Sistema Operacional
+## Sistema Operacional
 Windows ou Linux
