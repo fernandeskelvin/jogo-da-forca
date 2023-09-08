@@ -24,7 +24,7 @@ def desenhar_boneco(tentativas):
 def mostrar_painel():
     limpar_tela()
     lugar_letra_correta = [letra.upper() for letra in lugar_para_encontrar]
-    print(f'Você só pode errar {tentativas} vezes até acertar a palavra! \U0001f6a8\n')
+    print(f'Você tem {tentativas} chance{"s" if tentativas != 1 else ""} para acertar a palavra! \U0001f6a8\n')
     print(f'Dica: {categoria.upper()}\n')
     print(" ".join(lugar_letra_correta))
     desenhar_boneco(tentativas)
@@ -48,7 +48,7 @@ palavras = {
 
 nome_usuario = input('Olá, qual é o seu nome? ')
 limpar_tela()
-print(f'\nOlá, {nome_usuario}! Seja Bem-vinda(o) ao Jogo da Forca! \U0001f609\n\n')
+print(f'\nOlá, {nome_usuario.title()}! Seja Bem-vinda(o) ao Jogo da Forca! \U0001f609\n\n')
 
 # Loop principal do jogo
 while True:
